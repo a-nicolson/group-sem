@@ -26,7 +26,7 @@ The user selects “Continent Report” and specifies a continent (e.g., Asia, E
 1. User launches the application.
 2. User selects “Continent Report.”
 3. System prompts the user to select or enter a continent name.
-4. User specifies a valid continent name (e.g., Asia).
+4. User specifies a valid continent name.
 5. System connects to the world database.
 6. System executes the SQL query to retrieve all countries in that continent ordered by population.
 7. System formats the data into a readable table or report.
