@@ -31,8 +31,8 @@ The user selects “District Population Report” and provides the district name
 8. User reviews the result successfully.
 ## EXTENSION
 3. **Invalid district name**:
-    - System displays “Invalid input” and requests new entry.
+   1. System displays “Invalid input” and requests new entry.
 4. **Database connection fails**:
-    - System retries or displays “Unable to connect to database.”
+   1. System retries or displays “Unable to connect to database.”
 ## SCHEDULE
 Week 12 (Target for Code Review 4)

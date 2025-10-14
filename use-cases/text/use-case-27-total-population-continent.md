@@ -31,8 +31,8 @@ The user selects “Continent Population Report” and provides a continent name
 8. User reviews the data successfully.
 ## EXTENSION
 3. **User enters invalid continent name**:
-    - System displays an error and requests valid input.
+   1. System displays an error and requests valid input.
 4. **Database connection fails**:
-    - System retries or displays “Unable to connect to database.”
+   1. System retries or displays “Unable to connect to database.”
 ## SCHEDULE
 Week 12 (Target for Code Review 4)

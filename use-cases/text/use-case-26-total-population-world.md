@@ -31,8 +31,8 @@ The user selects “Region Population Report” and enters the region name.
 8. User reviews the data successfully.
 ## EXTENSION
 3. **Invalid region name**:
-    - System displays “Invalid input” and requests re-entry.
+   1. System displays “Invalid input” and requests re-entry.
 4. **Database connection fails**:
-    - System retries or displays “Unable to connect to database.”
+   1. System retries or displays “Unable to connect to database.”
 ## SCHEDULE
 Week 12 (Target for Code Review 4)
