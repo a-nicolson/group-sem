@@ -1,0 +1,12 @@
+@startuml
+title UC02 - All countries in a continent organised by population
+
+actor "Data Viewer" as DV
+
+rectangle "Global Population Information System" {
+    usecase UC02 as "View all countries\nin a continent\nordered by population"
+
+    DV --> UC02
+}
+
+@enduml
