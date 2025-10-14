@@ -4,6 +4,6 @@ public class App
 {
     public static void main(String[] args)
     {
-       System.out.println("SQL connection to go here");
+       System.out.println("SQL connection to go here.");
     }
 }
