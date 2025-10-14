@@ -26,7 +26,7 @@ rectangle "Report System" {
   usecase UCg as "Print sorted capital cities by filter"
   usecase UCh as "Print list of N capital cities by filter"
   usecase UCi as "Print population information by filter"
-  usecase UCj as "Print language information for report"
+  usecase UCj as "Print language information for report."
 
   UC1 --> UCa : include
   UC2 --> UCb : include
