@@ -1,0 +1,68 @@
+@startuml
+left to right direction
+
+actor Employee
+
+rectangle Database
+
+rectangle "Report System" {
+  usecase UC1 as "Get country report"
+  usecase UC2 as "Get continent report"
+  usecase UC3 as "Get region report"
+  usecase UC4 as "Get top N countries in the world, continent or region"
+  usecase UC5 as "Get cities in the world, continent or region by population"
+  usecase UC6 as "Get top N cities in the world, continent, region, country or district by population"
+  usecase UC7 as "Sort capitals of either the world, a continent or region by population"
+  usecase UC8 as "Get top N capitals of the world, a continent or region by population"
+  usecase UC9 as "Get population information for a continent, region, country"
+  usecase UC10 as "Produce a language report"
+
+  usecase UCa as "Print country information"
+  usecase UCb as "Print continent information"
+  usecase UCc as "Print region information"
+  usecase UCd as "Print list of N countries"
+  usecase UCe as "Print sorted list of cities by population"
+  usecase UCf as "Print list of N cities by filter"
+  usecase UCg as "Print sorted capital cities by filter"
+  usecase UCh as "Print list of N capital cities by filter"
+  usecase UCi as "Print population information by filter"
+  usecase UCj as "Print language information"
+
+  UC1 --> UCa : include
+  UC2 --> UCb : include
+  UC3 --> UCc : include
+  UC4 --> UCd : include
+  UC5 --> UCe : include
+  UC6 --> UCf : include
+  UC7 --> UCg : include
+  UC8 --> UCh : include
+  UC9 --> UCi : include
+  UC10 --> UCj : include
+
+
+
+  Employee --> UC1
+  Employee --> UC2
+  Employee --> UC3
+  Employee --> UC4
+  Employee --> UC5
+  Employee --> UC6
+  Employee --> UC7
+  Employee --> UC8
+  Employee --> UC9
+  Employee --> UC10
+
+  UC1 - Database
+  UC2 - Database
+  UC3 - Database
+  UC4 - Database
+  UC5 - Database
+  UC6 -Database
+  UC7 - Database
+  UC8 - Database
+  UC9 -Database
+  UC10 - Database
+}
+@enduml
+
+
