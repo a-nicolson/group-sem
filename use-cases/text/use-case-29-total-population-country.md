@@ -31,8 +31,8 @@ The user selects “Country Population Report” and enters a country name.
 8. User reviews the report successfully.
 ## EXTENSION
 3. **Invalid country name**:
-    - System displays “Invalid input” and prompts again.
+   1. System displays “Invalid input” and prompts again.
 4. **Database connection fails**:
-    - System retries or displays “Unable to connect to database.”
+   1. System retries or displays “Unable to connect to database.”
 ## SCHEDULE
 Week 12 (Target for Code Review 4)
