@@ -18,5 +18,5 @@ jobs:
           mvn package
           docker compose up --abort-on-container-exit
       - name: view logs
-        run: docker logs sem-cw-app-1
+        run: docker logs group-sem-app-1
 
