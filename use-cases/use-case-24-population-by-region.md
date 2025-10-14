@@ -44,7 +44,5 @@ The user selects “Region Population Report” from the main menu.
     1. System logs the error and shows “Population data unavailable.”
 5. **Missing data for a region**:
     1. System displays “Data incomplete for selected region.” and continues with available data.
-6. **Export function fails (optional)**:
-    1. System notifies the user that export could not be completed.
 ## SCHEDULE
 Week 12 (Target for Code Review 4)
