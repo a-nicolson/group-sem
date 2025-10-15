@@ -2,8 +2,15 @@ package com.napier.sem;
 
 import java.sql.*;
 
+/**
+ * App for generating reports on world population data from an SQL database.
+ */
 public class App
 {
+    /**
+     * Main method for the app
+     * @param args arguments passed to main
+     */
     public static void main(String[] args)
     {
         try
