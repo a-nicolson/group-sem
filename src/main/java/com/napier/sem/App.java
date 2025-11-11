@@ -115,6 +115,14 @@ public class App
      */
     public void allCountriesByPopulationReportDesc()
     {
+            ArrayList<Country> countries = allCountriesByPopulationDesc();
+
+            if (countries == null || countries.isEmpty()) {
+                System.out.println("No countries found.");
+                return;
+            }
+
+
         for(Country country : allCountriesByPopulationDesc())
         {
            System.out.println(
@@ -281,10 +289,16 @@ public class App
 
     /**
      *  Given the name of a continent, produces
-     *  a report on the population of the countries in the continent
+     *  a report on the population of the countries in the continents
      */
     public void countriesByPopulationContinentReport(String continent)
     {
+        ArrayList<Country> countries = getCountriesByPopulationContinent(continent);
+        if (countries == null || countries.isEmpty()) {
+            System.out.println("No countries found.");
+            return;
+        }
+
         for(Country country : getCountriesByPopulationContinent(continent)) {
             System.out.println(
                     country.countryCode + " "
