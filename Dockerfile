@@ -1,4 +1,4 @@
 FROM amazoncorretto:17
-COPY ./target/groupSE-0.1.0.3-jar-with-dependencies.jar /tmp
+COPY ./target/seMethods-jar-with-dependencies.jar /tmp/seMethods.jar
 WORKDIR /tmp
-ENTRYPOINT ["java", "-jar", "groupSE-0.1.0.3-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "seMethods.jar", "db:3306", "30000"]
