@@ -149,7 +149,6 @@ public class App
    }
 
     /**
-     *
      * Produces a city report taking a city as a parameter
      */
     public void cityReport(City city)
@@ -206,7 +205,6 @@ public class App
     }
 
     /**
-     *
      * Creates country object using countryName to search
      */
     public Country getCountry(String countryName)
@@ -244,7 +242,6 @@ public class App
     }
 
     /**
-     *
      * All the countries in a continent organised by largest to smallest population
      */
     public ArrayList<Country> getCountriesByPopulationContinent(String continent) {
@@ -566,7 +563,6 @@ public class App
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities");
             return null;
         }
     }
@@ -628,7 +624,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in continent");
             return null;
         }
     }
@@ -680,7 +675,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in region");
             return null;
         }
     }
@@ -731,7 +725,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in country");
             return null;
         }
     }
@@ -783,7 +776,6 @@ public class App
         catch(Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in district");
             return null;
         }
     }
@@ -835,7 +827,6 @@ public class App
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities");
             return null;
         }
     }
@@ -889,7 +880,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in continent");
             return null;
         }
     }
@@ -942,7 +932,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in region");
             return null;
         }
     }
@@ -994,7 +983,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in country");
             return null;
         }
     }
@@ -1044,7 +1032,6 @@ public class App
         catch(Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in district");
             return null;
         }
     }
@@ -1232,7 +1219,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve top capital cities for continent " + continent);
             return null;
         }
     }
@@ -1274,7 +1260,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve top capital cities for region " + region);
             return null;
         }
     }
@@ -1286,6 +1271,10 @@ public class App
             System.out.println(city.cityName + " " + city.countryName + " " + city.population);
         }
     }
+
+
+
+
 
 
     public static void main(String[] args)
