@@ -56,6 +56,11 @@ jobs:
       - name: Package Fat Jar
         run: mvn clean compile assembly:single -DskipTests
 
+      - name: Check if JAR file exists
+        run: ls -l target/seMethods-jar-with-dependencies.jar
+
+
+
       - name: Build and Run Docker Compose
         run: docker compose up --build --abort-on-container-exit
 
