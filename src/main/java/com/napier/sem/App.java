@@ -546,10 +546,10 @@ public class App
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT ci.ID, ci.Name AS CityName, co.Name AS CountryName, ci.District, ci.Population "
-                            + "FROM city ci "
-                            + "JOIN country co ON ci.CountryCode = co.Code "
-                            + "ORDER BY ci.Population DESC;";
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.District, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.CountryCode = country.Code "
+                            + "ORDER BY city.Population DESC;";
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -593,25 +593,56 @@ public class App
         }
     }
 
+    public ArrayList<City> citiesByPopulationContinent(String continent)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.District, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE country.Continent = '" + continent + "' "
+                            + "ORDER BY city.Population DESC;";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                cities.add(city);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve cities in continent");
+            return null;
+        }
+    }
+
+    public void citiesByPopulationContinentReport(String continent)
+    {
+        for(City city : citiesByPopulationContinent(continent)) {
+            System.out.println(
+                    city.cityName + " " + city.countryName + " "
+                    + city.district + " " + city.population);
+        }
+    }
+
     public static void main(String[] args)
     {
         App a = new App();
 
         a.connect();
-
-
-        //City city = a.getCity("London");
-        //a.cityReport(city);
-
-        //Country country = a.getCountry("Brazil");
-        //a.countryReport(country);
-
-        //a.allCountriesByPopulationReportAsc();
-        //a.allCountriesByPopulationReportDesc(5);
-        a.allCitiesByPopulationReport();
-        //a.countriesByPopulationContinentReport("Oceania");
-
-
 
 
         a.disconnect();
