@@ -10,6 +10,7 @@ public class City {
     public String cityName;
     public int cityID;
     public String countryCode;
+    public String countryName;
     public String district;
     public int population;
 }
