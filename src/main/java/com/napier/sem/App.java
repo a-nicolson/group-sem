@@ -284,6 +284,55 @@ public class App
             return null;
         }
     }
+
+    /**
+     *
+     * All the countries in a continent organised by largest to smallest population
+     */
+    public ArrayList<Country> getCountriesByPopulationContinent(String continent) {
+        try {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "WHERE Continent = '" + continent + "' "
+                            + "ORDER BY Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (rset.next()) {
+                Country country = new Country();
+                country.countryCode = rset.getString("Code");
+                country.countryName = rset.getString("Name");
+                country.continent = rset.getString("Continent");
+                country.region = rset.getString("Region");
+                country.population = rset.getInt("Population");
+                country.capitalID = rset.getInt("Capital");
+                countries.add(country);
+            }
+            return countries;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to fetch countries in continent: " + continent);
+            return null;
+        }
+    }
+
+    public void countriesByPopulationContinentReport(String continent)
+    {
+        for(Country country : getCountriesByPopulationContinent(continent)) {
+            System.out.println(
+                    country.countryCode + " "
+                            + country.countryName + " "
+                            + country.continent + " "
+                            + country.region + " "
+                            + country.population + " "
+                            + country.capitalID);
+
+        }
+    }
 /*
     public String languageReport()
     {
@@ -304,6 +353,7 @@ public class App
 
         a.allCountriesByPopulationReportAsc();
         a.allCountriesByPopulationReportDesc();
+        a.countriesByPopulationContinentReport("Oceania");
 
         a.disconnect();
 
