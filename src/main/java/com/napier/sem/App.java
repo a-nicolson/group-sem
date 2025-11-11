@@ -818,6 +818,54 @@ public class App
         }
     }
 
+    public ArrayList<City> citiesByPopulationContinent(String continent, int n)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.District, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE country.Continent = '" + continent + "' "
+                            + "ORDER BY city.Population DESC"
+                            + " LIMIT " + n + ";";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                cities.add(city);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve cities in continent");
+            return null;
+        }
+    }
+
+    public void citiesByPopulationContinentReport(String continent, int n)
+    {
+        for(City city : citiesByPopulationContinent(continent, n)) {
+            System.out.println(
+                    city.cityName + " " + city.countryName + " "
+                            + city.district + " " + city.population);
+        }
+    }
+
+
+
     public static void main(String[] args)
     {
         App a = new App();
@@ -825,7 +873,7 @@ public class App
         a.connect();
 
 
-        a.allCitiesByPopulationReport(5);
+        a.citiesByPopulationContinentReport("North America", 5);
 
         a.disconnect();
 
