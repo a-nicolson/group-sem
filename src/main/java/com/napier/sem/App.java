@@ -423,8 +423,6 @@ public class App
 
     /**
      * Gets the top N populated countries in a continent where N is specified by the user
-     *
-     * @return
      */
     public ArrayList<Country> getCountriesByPopulationContinent(String continent, int n)
     {
@@ -573,6 +571,9 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for all cities sorted by population descending
+     */
     public void allCitiesByPopulationReport()
     {
         ArrayList<City> cities = allCitiesByPopulation();
@@ -593,6 +594,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches all cities in order of population descending
+     */
     public ArrayList<City> citiesByPopulationContinent(String continent)
     {
         try
@@ -629,6 +633,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for all cities in a continent,
+     *  in order of population descending
+     */
     public void citiesByPopulationContinentReport(String continent)
     {
         for(City city : citiesByPopulationContinent(continent)) {
@@ -638,6 +646,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches cities in a region, ordered by population descending
+     */
     public ArrayList<City> citiesByPopulationRegion(String region)
     {
         try
@@ -674,6 +685,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for each city in a region,
+     *  ordered by population descending
+     */
     public void citiesByPopulationRegionReport(String region)
     {
         for(City city : citiesByPopulationRegion(region)) {
@@ -683,6 +698,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches cities in a country, ordered by population descending
+     */
     public ArrayList<City> citiesByPopulationCountry(String country)
     {
         try
@@ -718,6 +736,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for each city in a country,
+     *  ordered by population descending
+     */
     public void citiesByPopulationCountryReport(String country)
     {
         for(City city : citiesByPopulationCountry(country))
@@ -728,6 +750,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches all cities in a district, ordered by population descending
+     */
     public ArrayList<City> citiesByPopulationDistrict(String district)
     {
         try
@@ -763,6 +788,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for all cities in a district,
+     *  ordered by population descending
+     */
     public void citiesByPopulationDistrictReport(String district)
     {
         for(City city : citiesByPopulationDistrict(district))
@@ -773,6 +802,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches top n cities, ordered by population descending
+     */
     public ArrayList<City> allCitiesByPopulation(int n)
     {
         try
@@ -808,6 +840,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for the top n cities,
+     *  ordered by population descending
+     */
     public void allCitiesByPopulationReport(int n)
     {
         for(City city : allCitiesByPopulation(n))
@@ -818,6 +854,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches top n cities in a continent, ordered by population descending
+     */
     public ArrayList<City> citiesByPopulationContinent(String continent, int n)
     {
         try
@@ -855,6 +894,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for top n cities in a continent,
+     *  ordered by population descending
+     */
     public void citiesByPopulationContinentReport(String continent, int n)
     {
         for(City city : citiesByPopulationContinent(continent, n)) {
@@ -864,6 +907,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches n cities in a region, ordered by population descending
+     */
     public ArrayList<City> citiesByPopulationRegion(String region, int n)
     {
         try
@@ -901,6 +947,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report for n cities in a region,
+     *  ordered by population descending
+     */
     public void citiesByPopulationRegionReport(String region, int n)
     {
         for(City city : citiesByPopulationRegion(region, n)) {
@@ -910,6 +960,9 @@ public class App
         }
     }
 
+    /**
+     *  Fetches top n cities in a country, ordered by population descending
+     */
     public ArrayList<City> citiesByPopulationCountry(String country, int n)
     {
         try
@@ -946,6 +999,10 @@ public class App
         }
     }
 
+    /**
+     *  Produces a report on top n cities in a country,
+     *  ordered by population descending
+     */
     public void citiesByPopulationCountryReport(String country, int n)
     {
         for(City city : citiesByPopulationCountry(country, n))
@@ -1002,6 +1059,234 @@ public class App
         }
     }
 
+    public ArrayList<City> capitalsByPopulation() {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.Population"
+                            + " FROM city "
+                            + "JOIN country ON city.ID = country.Capital "
+                            + " ORDER BY city.Population DESC;";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<City> capitals = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.population = rset.getInt("Population");
+                capitals.add(city);
+            }
+            return capitals;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public void capitalsByPopulationReport()
+    {
+        for(City city : capitalsByPopulation())
+        {
+            System.out.println(city.cityName + " " + city.countryName + " "
+            + city.population);
+        }
+    }
+
+    public ArrayList<City> capitalsByPopulationContinent(String continent)
+    {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.ID = country.Capital "
+                            + "WHERE country.Continent = '" + continent + "' "
+                            + "ORDER BY city.Population DESC;";
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<City> capitals = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.population = rset.getInt("Population");
+                capitals.add(city);
+            }
+            return capitals;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public void capitalsByPopulationContinentReport(String continent)
+    {
+        for(City city : capitalsByPopulationContinent(continent))
+        {
+            System.out.println(city.cityName + " " + city.countryName + " "
+            + city.population);
+        }
+    }
+
+    public ArrayList<City> capitalsByPopulationRegion(String region)
+    {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.ID = country.Capital "
+                            + "WHERE country.Region = '" + region + "' "
+                            + "ORDER BY city.Population DESC;";
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<City> capitals = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.population = rset.getInt("Population");
+                capitals.add(city);
+            }
+            return capitals;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public void capitalsByPopulationRegionReport(String region)
+    {
+        for(City city : capitalsByPopulationRegion(region))
+        {
+            System.out.println(city.cityName + " " + city.countryName + " "
+                    + city.population);
+        }
+    }
+
+    public ArrayList<City> allCapitalsByPopulation(int n) {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.Population " +
+                            "FROM city " +
+                            "JOIN country ON city.ID = country.Capital " +
+                            "ORDER BY city.Population DESC " +
+                            "LIMIT " + n + ";";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> capitals = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.population = rset.getInt("Population");
+                capitals.add(city);
+            }
+            return capitals;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public void allCapitalsByPopulationReport(int n)
+    {
+        for (City city : allCapitalsByPopulation(n))
+        {
+            System.out.println(city.cityName + " " + city.countryName + " " + city.population);
+        }
+    }
+
+    public ArrayList<City> capitalsContinent(String continent, int n)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.Population " +
+                            "FROM city " +
+                            "JOIN country ON city.ID = country.Capital " +
+                            "WHERE country.Continent = '" + continent + "' " +
+                            "ORDER BY city.Population DESC " +
+                            "LIMIT " + n + ";";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> capitals = new ArrayList<>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.population = rset.getInt("Population");
+                capitals.add(city);
+            }
+            return capitals;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve top capital cities for continent " + continent);
+            return null;
+        }
+    }
+
+    public void capitalsContinentReport(String continent, int n)
+    {
+        for (City city : capitalsContinent(continent, n))
+        {
+            System.out.println(city.cityName + " " + city.countryName + " " + city.population);
+        }
+    }
+
+    public ArrayList<City> capitalCitiesByRegion(String region, int n)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.Population " +
+                            "FROM city " +
+                            "JOIN country ON city.ID = country.Capital " +
+                            "WHERE country.Region = '" + region + "' " +
+                            "ORDER BY city.Population DESC " +
+                            "LIMIT " + n + ";";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> capitals = new ArrayList<>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.population = rset.getInt("Population");
+                capitals.add(city);
+            }
+            return capitals;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve top capital cities for region " + region);
+            return null;
+        }
+    }
+
+    public void capitalCitiesByRegionReport(String region, int n)
+    {
+        for (City city : capitalCitiesByRegion(region, n))
+        {
+            System.out.println(city.cityName + " " + city.countryName + " " + city.population);
+        }
+    }
+
 
     public static void main(String[] args)
     {
@@ -1010,9 +1295,9 @@ public class App
         a.connect();
 
 
-        a.citiesByPopulationCountryReport("Canada", 5);
-        a.citiesByPopulationRegionReport("Caribbean", 5);
-        a.citiesByPopulationDistrictReport("Porto", 2);
+        a.allCapitalsByPopulationReport(4);
+        a.capitalsContinentReport("North America", 4);
+        a.capitalCitiesByRegionReport("Middle East", 4);
 
         a.disconnect();
 
