@@ -49,7 +49,7 @@ public class AppTest
         city.cityName = "Tokyo";
         city.countryCode = "JPN";
         city.district = "Tokyo-to";
-        city.population = 13929286;
+        city.population = 7980230;
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
@@ -95,9 +95,9 @@ public class AppTest
         country.countryCode = "JPN";
         country.countryName = "Japan";
         country.continent = "Asia";
-        country.region = "East Asia";
-        country.population = 125000000;
-        country.capitalID = 3793;
+        country.region = "Eastern Asia";
+        country.population = 126714000;
+        country.capitalID = 1532;
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
