@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class App
 {
@@ -69,6 +70,63 @@ public class App
         }
     }
 
+    public ArrayList<Country> allCountriesByPopulation()
+    {
+       try {
+           Statement stmt = con.createStatement();
+
+           String strSelect =
+                   "SELECT Code, Name, Continent, Region, Population, Capital "
+                   + "FROM country "
+                   + "ORDER BY Population DESC";
+
+           ResultSet rset = stmt.executeQuery(strSelect);
+
+           ArrayList<Country> countries = new ArrayList<Country>();
+           while(rset.next())
+           {
+               Country country = new Country();
+               country.countryCode = rset.getString("Code");
+               country.countryName = rset.getString("Name");
+               country.continent = rset.getString("Continent");
+               country.region = rset.getString("Region");
+               country.population = rset.getInt("Population");
+               country.capitalID = rset.getInt("Capital");
+               countries.add(country);
+           }
+           return countries;
+       }
+       catch (Exception e)
+       {
+           System.out.println(e.getMessage());
+           System.out.println("Failed to fetch countries");
+           return null;
+       }
+
+       }
+
+       public void allCountriesByPopulationReport()
+       {
+           for(Country country : allCountriesByPopulation())
+           {
+               System.out.println(
+                       country.countryCode + " "
+                       + country.countryName + " "
+                       + country.continent + " "
+                       + country.region + " "
+                       + country.population + " ");
+
+           }
+
+
+
+       }
+
+
+
+
+
+
     public void countryReport(Country country)
     {
         if (country != null)
@@ -107,6 +165,10 @@ public class App
         }
     }
 
+    /**
+     *
+     * Creates city object using the cityName parameter to search
+     */
     public City getCity(String cityName)
     {
         try
@@ -140,6 +202,10 @@ public class App
         }
     }
 
+    /**
+     *
+     * Creates country object using countryName to search
+     */
     public Country getCountry(String countryName)
     {
         try
@@ -190,6 +256,8 @@ public class App
 
         Country country = a.getCountry("Brazil");
         a.countryReport(country);
+
+        a.allCountriesByPopulationReport();
 
         a.disconnect();
 
