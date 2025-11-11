@@ -638,12 +638,194 @@ public class App
         }
     }
 
+    public ArrayList<City> citiesByPopulationRegion(String region)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.District, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE country.Region = '" + region + "' "
+                            + "ORDER BY city.Population DESC;";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                cities.add(city);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve cities in region");
+            return null;
+        }
+    }
+
+    public void citiesByPopulationRegionReport(String region)
+    {
+        for(City city : citiesByPopulationRegion(region)) {
+            System.out.println(
+                    city.cityName + " " + city.countryName + " "
+                            + city.district + " " + city.population);
+        }
+    }
+
+    public ArrayList<City> citiesByPopulationCountry(String country)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID , city.Name AS CityName, country.Name AS CountryName, city.District, city.Population "
+                    + "FROM city "
+                    + "JOIN country ON city.CountryCode = country.Code "
+                    + "WHERE country.Name = '" + country + "' "
+                    + "ORDER BY city.Population DESC;";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                cities.add(city);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve cities in country");
+            return null;
+        }
+    }
+
+    public void citiesByPopulationCountryReport(String country)
+    {
+        for(City city : citiesByPopulationCountry(country))
+        {
+            System.out.println(
+                    city.cityName + " " + city.countryName + " "
+                    + city.district + " " + city.population);
+        }
+    }
+
+    public ArrayList<City> citiesByPopulationDistrict(String district)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID , city.Name AS CityName, country.Name AS CountryName, city.District, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE city.District = '" + district + "' "
+                            + "ORDER BY city.Population DESC;";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                cities.add(city);
+            }
+            return cities;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve cities in district");
+            return null;
+        }
+    }
+
+    public void citiesByPopulationDistrictReport(String district)
+    {
+        for(City city : citiesByPopulationDistrict(district))
+        {
+            System.out.println(
+                    city.cityName + " " + city.countryName + " "
+                            + city.district + " " + city.population);
+        }
+    }
+
+    public ArrayList<City> allCitiesByPopulation(int n)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID, city.Name AS CityName, country.Name AS CountryName, city.District, city.Population "
+                            + "FROM city "
+                            + "JOIN country ON city.CountryCode = country.Code "
+                            + "ORDER BY city.Population DESC"
+                            + " LIMIT " + n + ";";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("CityName");
+                city.countryName = rset.getString("CountryName");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                cities.add(city);
+            }
+            return cities;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to retrieve cities");
+            return null;
+        }
+    }
+
+    public void allCitiesByPopulationReport(int n)
+    {
+        for(City city : allCitiesByPopulation(n))
+        {
+            System.out.println(
+                    city.cityName + " " + city.countryName + " "
+                            + city.district + " " + city.population);
+        }
+    }
+
     public static void main(String[] args)
     {
         App a = new App();
 
         a.connect();
 
+
+        a.allCitiesByPopulationReport(5);
 
         a.disconnect();
 
