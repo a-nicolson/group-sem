@@ -69,11 +69,127 @@ public class App
         }
     }
 
+    public void countryReport(Country country)
+    {
+        if (country != null)
+        {
+            System.out.println(
+                    country.countryCode + " "
+                    + country.countryName + " "
+                    + country.continent + " "
+                    + country.region + " "
+                    + country.population + " "
+                    + country.capitalID);
+        }
+        else
+        {
+            System.out.println("Country is null");
+        }
+    }
+
+    /**
+     *
+     * Produces a city report taking a city as a parameter
+     */
+    public void cityReport(City city)
+    {
+        if (city != null)
+        {
+            System.out.println(
+                    city.cityName + " "
+                    + city.countryCode + " "
+                    + city.district + " "
+                    + city.population);
+        }
+        else
+        {
+            System.out.println("City is null");
+        }
+    }
+
+    public City getCity(String cityName)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT ID, Name, CountryCode, District, Population "
+                    + "FROM city "
+                    + "WHERE Name = '" + cityName + "';";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            if (rset.next())
+            {
+                City city = new City();
+                city.cityID = rset.getInt("ID");
+                city.cityName = rset.getString("Name");
+                city.countryCode = rset.getString("CountryCode");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                return city;
+            }
+            else
+                return null;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city " + cityName);
+            return null;
+        }
+    }
+
+    public Country getCountry(String countryName)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                    + "FROM country "
+                    + "WHERE Name = '" + countryName + "';";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            if (rset.next())
+            {
+                Country country = new Country();
+                country.countryCode = rset.getString("Code");
+                country.countryName = rset.getString("Name");
+                country.continent = rset.getString("Continent");
+                country.region = rset.getString("Region");
+                country.population = rset.getInt("Population");
+                country.capitalID = rset.getInt("Capital");
+                return country;
+            }
+            else
+                return null;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country " + countryName);
+            return null;
+        }
+    }
+/*
+    public String languageReport()
+    {
+        return report;
+    }
+*/
     public static void main(String[] args)
     {
         App a = new App();
 
         a.connect();
+
+        City city = a.getCity("London");
+        a.cityReport(city);
+
+        Country country = a.getCountry("Brazil");
+        a.countryReport(country);
 
         a.disconnect();
 
