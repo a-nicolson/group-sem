@@ -70,7 +70,7 @@ public class App
         }
     }
 
-    public ArrayList<Country> allCountriesByPopulation()
+    public ArrayList<Country> allCountriesByPopulationDesc()
     {
        try {
            Statement stmt = con.createStatement();
@@ -105,9 +105,9 @@ public class App
 
        }
 
-       public void allCountriesByPopulationReport()
+       public void allCountriesByPopulationReportDesc()
        {
-           for(Country country : allCountriesByPopulation())
+           for(Country country : allCountriesByPopulationDesc())
            {
                System.out.println(
                        country.countryCode + " "
@@ -122,9 +122,54 @@ public class App
 
        }
 
+       public ArrayList<Country> allCountriesByPopulationAsc()
+       {
+           try {
+               Statement stmt = con.createStatement();
 
+               String strSelect =
+                       "SELECT Code, Name, Continent, Region, Population, Capital "
+                               + "FROM country "
+                               + "ORDER BY Population ASC";
 
+               ResultSet rset = stmt.executeQuery(strSelect);
 
+               ArrayList<Country> countries = new ArrayList<Country>();
+               while(rset.next())
+               {
+                   Country country = new Country();
+                   country.countryCode = rset.getString("Code");
+                   country.countryName = rset.getString("Name");
+                   country.continent = rset.getString("Continent");
+                   country.region = rset.getString("Region");
+                   country.population = rset.getInt("Population");
+                   country.capitalID = rset.getInt("Capital");
+                   countries.add(country);
+               }
+               return countries;
+           }
+           catch (Exception e)
+           {
+               System.out.println(e.getMessage());
+               System.out.println("Failed to fetch countries");
+               return null;
+           }
+       }
+
+    public void allCountriesByPopulationReportAsc()
+    {
+        for(Country country : allCountriesByPopulationAsc())
+        {
+            System.out.println(
+                    country.countryCode + " "
+                            + country.countryName + " "
+                            + country.continent + " "
+                            + country.region + " "
+                            + country.population + " ");
+
+        }
+
+    }
 
 
     public void countryReport(Country country)
@@ -257,7 +302,8 @@ public class App
         Country country = a.getCountry("Brazil");
         a.countryReport(country);
 
-        a.allCountriesByPopulationReport();
+        a.allCountriesByPopulationReportAsc();
+        a.allCountriesByPopulationReportDesc();
 
         a.disconnect();
 
