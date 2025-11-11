@@ -59,7 +59,7 @@ public class AppTest
 
         assertTrue(output.contains("Tokyo"));
         assertTrue(output.contains("JPN"));
-        assertTrue(output.contains("13929286"));
+        assertTrue(output.contains("7980230"));
     }
 
     // ---- Country Report Tests ----
@@ -107,6 +107,6 @@ public class AppTest
 
         assertTrue(output.contains("Japan"));
         assertTrue(output.contains("Asia"));
-        assertTrue(output.contains("125000000"));
+        assertTrue(output.contains("126714000"));
     }
 }
