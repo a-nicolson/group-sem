@@ -3,7 +3,7 @@ on: push
 
 jobs:
   Build:
-    name: Build and Start Using docker-compose
+    name: Build, Test, and Start Using docker-compose
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -13,10 +13,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+      - name: Unit Tests
+        run: mvn -Dtest=com.napier.sem.AppTest test
       - name: Package and Run docker compose
         run: |
-          mvn package
+          mvn package -DskipTests
           docker compose up --abort-on-container-exit
-      - name: view logs
+      - name: View logs
         run: docker logs group-sem-app-1
-
