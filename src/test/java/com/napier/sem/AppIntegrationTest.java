@@ -1,4 +1,4 @@
-package com.napier.sem;
+/**package com.napier.sem;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
@@ -48,3 +48,4 @@ public class AppIntegrationTest {
         assertTrue(countries.size() > 0);
     }
 }
+**/

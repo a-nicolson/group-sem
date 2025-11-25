@@ -1093,13 +1093,6 @@ public class App
                             " WHERE CountryCode = (SELECT Code FROM country WHERE Name = '" + name + "'))) AS nonCityPop;";
                     break;
 
-                case "district":
-                    strSelect = "SELECT " +
-                            "(SELECT SUM(population) FROM city WHERE District = '" + name + "') AS totalPop, " +
-                            "(SELECT SUM(population) FROM city WHERE District = '" + name + "') AS cityPop, " +
-                            "0 AS nonCityPop;";
-                    break;
-
                 case "city":
                     strSelect = "SELECT population AS totalPop FROM city WHERE Name = '" + name + "';";
                     break;
@@ -1155,6 +1148,7 @@ public class App
         a.populationReport("country", "Germany");
         a.populationReport("world", null);
         a.populationReport("continent",  "North America");
+        a.populationReport("region", "South America");
 
         a.disconnect();
 
