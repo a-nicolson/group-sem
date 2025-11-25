@@ -1,8 +1,7 @@
 /**
  * Class App:
  * Our app to produce reports on the population and languages spoken in the world and it's
- * continent, countries, cities, regions and districts
- *
+ * continent, countries, cities, regions and districts. Methods ending in report are report generating methods.
  *
  */
 package com.napier.sem;
@@ -416,8 +415,6 @@ public class App
 
     /**
      * Gets the top N populated countries in a continent where N is specified by the user
-     *
-     * @return
      */
     public ArrayList<Country> getCountriesByPopulationContinent(String continent, int n)
     {
@@ -559,7 +556,6 @@ public class App
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities");
             return null;
         }
     }
@@ -680,7 +676,8 @@ public class App
      */
     public void citiesByPopulationRegionReport(String region)
     {
-        for(City city : citiesByPopulationRegion(region)) {
+        for(City city : citiesByPopulationRegion(region))
+        {
             System.out.println(
                     city.cityName + " " + city.countryName + " "
                             + city.district + " " + city.population);
@@ -818,7 +815,8 @@ public class App
             }
             return cities;
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
             return null;
         }
@@ -932,7 +930,8 @@ public class App
      */
     public void citiesByPopulationRegionReport(String region, int n)
     {
-        for(City city : citiesByPopulationRegion(region, n)) {
+        for(City city : citiesByPopulationRegion(region, n))
+        {
             System.out.println(
                     city.cityName + " " + city.countryName + " "
                             + city.district + " " + city.population);
@@ -1044,14 +1043,17 @@ public class App
 
     /**
      * Produces a population report specifying the total population in the world, a specified continent
-     * country/district/region/city. Requires type and name as a parameter.
+     * country/district/region/city. Requires type and name as a parameter. The required population totals along with rural/city divide are
+     * retrievable through this method.
      */
-    public void populationReport(String type, String name) {
+    public void populationReport(String type, String name)
+    {
         try {
             Statement stmt = con.createStatement();
             String strSelect = "";
 
-            switch (type.toLowerCase()) {
+            switch (type.toLowerCase())
+            {
                 case "world":
                     strSelect = "SELECT " +
                             "(SELECT SUM(population) FROM country) AS totalPop, " +
@@ -1104,14 +1106,16 @@ public class App
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            if (rset.next()) {
+            if (rset.next())
+            {
                 long totalPop = rset.getLong("totalPop");
                 long cityPop = 0;
                 long nonCityPop = 0;
                 double cityPercent = 0.0;
                 double nonCityPercent = 0.0;
 
-                if (!type.equalsIgnoreCase("city")) {
+                if (!type.equalsIgnoreCase("city"))
+                {
                     cityPop = rset.getLong("cityPop");
                     nonCityPop = rset.getLong("nonCityPop");
                     cityPercent = ((double) cityPop / totalPop) * 100;
@@ -1121,13 +1125,79 @@ public class App
                 System.out.println(name);
                 System.out.println("Total Population: " + totalPop);
 
-                if (!type.equalsIgnoreCase("city")) {
+                if (!type.equalsIgnoreCase("city"))
+                {
                     System.out.println("City Population: " + cityPop + " (" + String.format("%.2f", cityPercent) + "%)");
                     System.out.println("Non City Population: " + nonCityPop + " (" + String.format("%.2f", nonCityPercent) + "%)");
                 }
             }
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Produces a report on a capital city
+     * A capital city report requires the following columns:
+     */
+    public void capitalCityReport(String country)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.name AS name, country.name AS countryName, city.population AS population " +
+                            "FROM city " +
+                            "JOIN country ON country.capital = city.ID " +
+                            "WHERE country.name = '" + country + "';";
+            ResultSet rset = stmt.executeQuery(strSelect);
+            while(rset.next())
+            {
+                String name =  rset.getString("name");
+                String countryName = rset.getString("countryName");
+                int population = rset.getInt("population");
+                System.out.println("Capital city: " + name + " Country: " + countryName + " Population: " + population);
+            }
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Produces a statistical report of languages spoken across the world
+     */
+    public void languageReport()
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT language, "
+                            + " SUM(country.population * countrylanguage.percentage / 100) AS noOfSpeakers, "
+                            + " (SUM(country.population * countrylanguage.percentage / 100) / "
+                            + " (SELECT SUM(population) FROM country) * 100) AS percentageOfSpeakers "
+                            + "FROM countrylanguage "
+                            + "JOIN country ON countrylanguage.CountryCode = country.Code "
+                            + "WHERE language IN ('Chinese','Arabic','Hindi','Spanish','English') "
+                            + "GROUP BY language "
+                            + "ORDER BY noOfSpeakers DESC;";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            while (rset.next())
+            {
+                String language = rset.getString("Language");
+                double percentageOfSpeakers = rset.getDouble("percentageOfSpeakers");
+                int noOfSpeakers = rset.getInt("noOfSpeakers");
+                System.out.println("language: " + language + " number of speakers " + noOfSpeakers + " % of speakers " + percentageOfSpeakers);
+            }
+        }
+        catch(Exception e)
+        {
             System.out.println(e.getMessage());
         }
     }
@@ -1149,6 +1219,8 @@ public class App
         a.populationReport("world", null);
         a.populationReport("continent",  "North America");
         a.populationReport("region", "South America");
+        a.languageReport();
+        a.capitalCityReport("Canada");
 
         a.disconnect();
 
