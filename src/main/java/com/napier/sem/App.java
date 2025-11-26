@@ -1,3 +1,9 @@
+/**
+ * Class App:
+ * Our app to produce reports on the population and languages spoken in the world and it's
+ * continent, countries, cities, regions and districts. Methods ending in report are report generating methods.
+ *
+ */
 package com.napier.sem;
 
 import java.sql.*;
@@ -96,7 +102,6 @@ public class App
        catch (Exception e)
        {
            System.out.println(e.getMessage());
-           System.out.println("Failed to fetch countries");
            return null;
        }
     }
@@ -192,7 +197,6 @@ public class App
         } catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get city " + cityName);
             return null;
         }
     }
@@ -230,7 +234,6 @@ public class App
         } catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get country " + countryName);
             return null;
         }
     }
@@ -269,7 +272,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to fetch countries in continent: " + continent);
             return null;
         }
     }
@@ -326,7 +328,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to fetch countries in region: " + region);
             return null;
         }
     }
@@ -392,7 +393,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to fetch countries");
             return null;
         }
     }
@@ -415,8 +415,6 @@ public class App
 
     /**
      * Gets the top N populated countries in a continent where N is specified by the user
-     *
-     * @return
      */
     public ArrayList<Country> getCountriesByPopulationContinent(String continent, int n)
     {
@@ -450,7 +448,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to fetch countries");
             return null;
         }
     }
@@ -506,7 +503,6 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to fetch countries");
             return null;
         }
     }
@@ -560,11 +556,13 @@ public class App
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities");
             return null;
         }
     }
 
+    /**
+     * Produces a report of all cities in the world ordered by Population
+     */
     public void allCitiesByPopulationReport()
     {
         ArrayList<City> cities = allCitiesByPopulation();
@@ -585,6 +583,9 @@ public class App
         }
     }
 
+    /**
+     * Fetches all cities in a population and orders them by population
+     */
     public ArrayList<City> citiesByPopulationContinent(String continent)
     {
         try
@@ -616,11 +617,13 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in continent");
             return null;
         }
     }
 
+    /**
+     * Produces a report of all cities in a continent ordered by population
+     */
     public void citiesByPopulationContinentReport(String continent)
     {
         for(City city : citiesByPopulationContinent(continent)) {
@@ -630,6 +633,9 @@ public class App
         }
     }
 
+    /**
+     * Fetches cities in a specified region and returns them ordered by population
+     */
     public ArrayList<City> citiesByPopulationRegion(String region)
     {
         try
@@ -661,20 +667,26 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in region");
             return null;
         }
     }
 
+    /**
+     * Produces a report on cities in a specified region ordered by population
+     */
     public void citiesByPopulationRegionReport(String region)
     {
-        for(City city : citiesByPopulationRegion(region)) {
+        for(City city : citiesByPopulationRegion(region))
+        {
             System.out.println(
                     city.cityName + " " + city.countryName + " "
                             + city.district + " " + city.population);
         }
     }
 
+    /**
+     * Fetches cities in a specified country and orders by population
+     */
     public ArrayList<City> citiesByPopulationCountry(String country)
     {
         try
@@ -705,11 +717,13 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in country");
             return null;
         }
     }
 
+    /**
+     * Produces a report on cities in a specified country ordered by population
+     */
     public void citiesByPopulationCountryReport(String country)
     {
         for(City city : citiesByPopulationCountry(country))
@@ -720,6 +734,9 @@ public class App
         }
     }
 
+    /**
+     * Fetches cities in a specified district ordered by population
+     */
     public ArrayList<City> citiesByPopulationDistrict(String district)
     {
         try
@@ -750,11 +767,13 @@ public class App
         catch(Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in district");
             return null;
         }
     }
 
+    /**
+     * Produces a report on cities in a specified district ordered by population
+     */
     public void citiesByPopulationDistrictReport(String district)
     {
         for(City city : citiesByPopulationDistrict(district))
@@ -765,6 +784,9 @@ public class App
         }
     }
 
+    /**
+     * Fetches top n cities and orders by population
+     */
     public ArrayList<City> allCitiesByPopulation(int n)
     {
         try
@@ -793,13 +815,16 @@ public class App
             }
             return cities;
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities");
             return null;
         }
     }
 
+    /**
+     * Produces a report the top N cities in the world ordered by population
+     */
     public void allCitiesByPopulationReport(int n)
     {
         for(City city : allCitiesByPopulation(n))
@@ -810,6 +835,9 @@ public class App
         }
     }
 
+    /**
+     * Fetches top N cities in a specified continent and orders by population
+     */
     public ArrayList<City> citiesByPopulationContinent(String continent, int n)
     {
         try
@@ -842,11 +870,13 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in continent");
             return null;
         }
     }
 
+    /**
+     * Produces a report on the top N populated cities in a specified continent
+     */
     public void citiesByPopulationContinentReport(String continent, int n)
     {
         for(City city : citiesByPopulationContinent(continent, n)) {
@@ -856,6 +886,9 @@ public class App
         }
     }
 
+    /**
+     * Fetches top N populated cities in a specified region
+     */
     public ArrayList<City> citiesByPopulationRegion(String region, int n)
     {
         try
@@ -888,20 +921,26 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in region");
             return null;
         }
     }
 
+    /**
+     * Produces report on top N populated cities in a specified region
+     */
     public void citiesByPopulationRegionReport(String region, int n)
     {
-        for(City city : citiesByPopulationRegion(region, n)) {
+        for(City city : citiesByPopulationRegion(region, n))
+        {
             System.out.println(
                     city.cityName + " " + city.countryName + " "
                             + city.district + " " + city.population);
         }
     }
 
+    /**
+     * Fetches top N populated cities in a specified country
+     */
     public ArrayList<City> citiesByPopulationCountry(String country, int n)
     {
         try
@@ -933,11 +972,13 @@ public class App
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to retrieve cities in country");
             return null;
         }
     }
 
+    /**
+     * Produces a report on the top N specified cities in a specific country
+     */
     public void citiesByPopulationCountryReport(String country, int n)
     {
         for(City city : citiesByPopulationCountry(country, n))
@@ -948,6 +989,9 @@ public class App
         }
     }
 
+    /**
+     * Fetches top N populated cities in a specified district
+     */
     public ArrayList<City> citiesByPopulationDistrict(String district, int n)
     {
         try
@@ -984,6 +1028,9 @@ public class App
         }
     }
 
+    /**
+     * Produces a report on the top N populated cities in a specified district
+     */
     public void citiesByPopulationDistrictReport(String district, int n)
     {
         for(City city : citiesByPopulationDistrict(district, n))
@@ -993,6 +1040,168 @@ public class App
                             + city.district + " " + city.population);
         }
     }
+
+    /**
+     * Produces a population report specifying the total population in the world, a specified continent
+     * country/district/region/city. Requires type and name as a parameter. The required population totals along with rural/city divide are
+     * retrievable through this method.
+     */
+    public void populationReport(String type, String name)
+    {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect = "";
+
+            switch (type.toLowerCase())
+            {
+                case "world":
+                    strSelect = "SELECT " +
+                            "(SELECT SUM(population) FROM country) AS totalPop, " +
+                            "(SELECT SUM(population) FROM city) AS cityPop, " +
+                            "((SELECT SUM(population) FROM country) - (SELECT SUM(population) FROM city)) AS nonCityPop;";
+                    break;
+
+                case "continent":
+                    strSelect = "SELECT " +
+                            "(SELECT SUM(population) FROM country WHERE Continent = '" + name + "') AS totalPop, " +
+                            "(SELECT SUM(city.population) FROM city " +
+                            " JOIN country ON city.CountryCode = country.Code " +
+                            " WHERE country.Continent = '" + name + "') AS cityPop, " +
+                            "((SELECT SUM(population) FROM country WHERE Continent = '" + name + "') - " +
+                            "(SELECT SUM(city.population) FROM city " +
+                            " JOIN country ON city.CountryCode = country.Code " +
+                            " WHERE country.Continent = '" + name + "')) AS nonCityPop;";
+                    break;
+
+                case "region":
+                    strSelect = "SELECT " +
+                            "(SELECT SUM(population) FROM country WHERE Region = '" + name + "') AS totalPop, " +
+                            "(SELECT SUM(city.population) FROM city " +
+                            " JOIN country ON city.CountryCode = country.Code " +
+                            " WHERE country.Region = '" + name + "') AS cityPop, " +
+                            "((SELECT SUM(population) FROM country WHERE Region = '" + name + "') - " +
+                            "(SELECT SUM(city.population) FROM city " +
+                            " JOIN country ON city.CountryCode = country.Code " +
+                            " WHERE country.Region = '" + name + "')) AS nonCityPop;";
+                    break;
+
+                case "country":
+                    strSelect = "SELECT " +
+                            "(SELECT population FROM country WHERE Name = '" + name + "') AS totalPop, " +
+                            "(SELECT SUM(population) FROM city " +
+                            " WHERE CountryCode = (SELECT Code FROM country WHERE Name = '" + name + "')) AS cityPop, " +
+                            "((SELECT population FROM country WHERE Name = '" + name + "') - " +
+                            "(SELECT SUM(population) FROM city " +
+                            " WHERE CountryCode = (SELECT Code FROM country WHERE Name = '" + name + "'))) AS nonCityPop;";
+                    break;
+
+                case "city":
+                    strSelect = "SELECT population AS totalPop FROM city WHERE Name = '" + name + "';";
+                    break;
+
+                default:
+                    System.out.println("Invalid type, please enter world/continent/region/city/district/country");
+                    return;
+            }
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            if (rset.next())
+            {
+                long totalPop = rset.getLong("totalPop");
+                long cityPop = 0;
+                long nonCityPop = 0;
+                double cityPercent = 0.0;
+                double nonCityPercent = 0.0;
+
+                if (!type.equalsIgnoreCase("city"))
+                {
+                    cityPop = rset.getLong("cityPop");
+                    nonCityPop = rset.getLong("nonCityPop");
+                    cityPercent = ((double) cityPop / totalPop) * 100;
+                    nonCityPercent = 100 - cityPercent;
+                }
+
+                System.out.println(name);
+                System.out.println("Total Population: " + totalPop);
+
+                if (!type.equalsIgnoreCase("city"))
+                {
+                    System.out.println("City Population: " + cityPop + " (" + String.format("%.2f", cityPercent) + "%)");
+                    System.out.println("Non City Population: " + nonCityPop + " (" + String.format("%.2f", nonCityPercent) + "%)");
+                }
+            }
+
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Produces a report on a capital city
+     * A capital city report requires the following columns:
+     */
+    public void capitalCityReport(String country)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.name AS name, country.name AS countryName, city.population AS population " +
+                            "FROM city " +
+                            "JOIN country ON country.capital = city.ID " +
+                            "WHERE country.name = '" + country + "';";
+            ResultSet rset = stmt.executeQuery(strSelect);
+            while(rset.next())
+            {
+                String name =  rset.getString("name");
+                String countryName = rset.getString("countryName");
+                int population = rset.getInt("population");
+                System.out.println("Capital city: " + name + " Country: " + countryName + " Population: " + population);
+            }
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Produces a statistical report of languages spoken across the world
+     */
+    public void languageReport()
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT language, "
+                            + " SUM(country.population * countrylanguage.percentage / 100) AS noOfSpeakers, "
+                            + " (SUM(country.population * countrylanguage.percentage / 100) / "
+                            + " (SELECT SUM(population) FROM country) * 100) AS percentageOfSpeakers "
+                            + "FROM countrylanguage "
+                            + "JOIN country ON countrylanguage.CountryCode = country.Code "
+                            + "WHERE language IN ('Chinese','Arabic','Hindi','Spanish','English') "
+                            + "GROUP BY language "
+                            + "ORDER BY noOfSpeakers DESC;";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            while (rset.next())
+            {
+                String language = rset.getString("Language");
+                double percentageOfSpeakers = rset.getDouble("percentageOfSpeakers");
+                int noOfSpeakers = rset.getInt("noOfSpeakers");
+                System.out.println("language: " + language + " number of speakers " + noOfSpeakers + " % of speakers " + percentageOfSpeakers);
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 
     public static void main(String[] args)
@@ -1005,10 +1214,13 @@ public class App
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-
-        a.citiesByPopulationCountryReport("Canada", 5);
-        a.citiesByPopulationRegionReport("Caribbean", 5);
-        a.citiesByPopulationDistrictReport("Porto", 2);
+        a.populationReport("city", "London");
+        a.populationReport("country", "Germany");
+        a.populationReport("world", null);
+        a.populationReport("continent",  "North America");
+        a.populationReport("region", "South America");
+        a.languageReport();
+        a.capitalCityReport("Canada");
 
         a.disconnect();
 
